@@ -1,0 +1,3 @@
+[submodule "oo"]
+	path = oo
+	url = https://github.com/niieani/bash-oo-framework.git
