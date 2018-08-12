@@ -6,6 +6,13 @@ VERSION="0.1.0"
 
 source "${ABSOLUTE_PATH}/oo/lib/oo-bootstrap.sh"
 
+import config/paths
+
+STAGE0=${BUILD}/stage0
+STAGE1=${BUILD}/stage1
+STAGE2=${BUILD}/stage2
+
+import scripts/chroot
 import scripts/cli
 import scripts/preflight
 import stage0/build
@@ -18,10 +25,11 @@ case "$1" in
     ;;
 
 ("build")
-    # TODO: don't repeat if already at next stage
+    ${ABSOLUTE_PATH}/tool clean
+    ${ABSOLUTE_PATH}/tool clean-build
     stage0
     stage1
-    # stage2
+    stage2
     ;;
 
 ("help")
@@ -33,8 +41,13 @@ case "$1" in
     ;;
 
 ("clean")
-    rm -rf ${ABSOLUTE_PATH}/build
+    for D in ${ABSOLUTE_PATH}/build/*; do [ -d "${D}" ] && clean_mounts $D; done
+    sudo chown -R $(whoami) ${ABSOLUTE_PATH}/build
     rm -rf ${ABSOLUTE_PATH}/download
+    ;;
+
+("clean-build")
+    rm -rf ${ABSOLUTE_PATH}/build
     ;;
 
 ("stage0")

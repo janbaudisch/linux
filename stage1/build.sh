@@ -4,9 +4,6 @@ import ../scripts/chroot
 import ../scripts/cleanup
 import ../scripts/log
 
-STAGE0=${ABSOLUTE_PATH}/build/stage0
-STAGE1=${ABSOLUTE_PATH}/build/stage1
-
 function stage1() {
     if [ ! -d $STAGE0 ] && [ ! -d $STAGE1 ]
     then
@@ -17,6 +14,8 @@ function stage1() {
     if [ ! -d $STAGE1 ]
     then
         mv $STAGE0 $STAGE1
+    	mkdir ${STAGE1}/dev
+    	mkdir ${STAGE1}/proc
     fi
 
     log ""
@@ -33,12 +32,11 @@ function stage1() {
 
         download_extract "G++3" $GPP3_URL ${STAGE1}/src/gcc3 true
 
-        cp ${ABSOLUTE_PATH}/files/patches/gcc3/* ${STAGE1}/src/gcc3/
+        cp ${ABSOLUTE_PATH}/files/patches/gcc/* ${STAGE1}/src/gcc3/
 
         chroot_exec $STAGE1 ${ABSOLUTE_PATH}/stage1/gcc3.sh "GCC3"
     fi
 
-    # TODO: find better way to find out if binutils done
     if [ ! -f ${STAGE1}/binutils ]
     then
         download_extract "binutils" $BINUTILS_URL ${STAGE1}/src/binutils
@@ -48,7 +46,7 @@ function stage1() {
         touch ${STAGE1}/binutils
     fi
 
-    if [ ! -d ${STAGE1}/libexec/gcc/x86_64-pc-linux-gnu/8.1.0 ]
+    if [ ! -d ${STAGE1}/libexec/gcc/x86_64-pc-linux-gnu/6.4.0 ]
     then
         download_extract "GCC" $GCC_URL ${STAGE1}/src/gcc
 
@@ -60,7 +58,7 @@ function stage1() {
 
         download_extract "ISL" $ISL_URL ${STAGE1}/src/gcc/isl
 
-        download_extract "CLooG" $CLOOG_URL ${STAGE1}/src/gcc/cloog
+        cp ${ABSOLUTE_PATH}/files/patches/gcc/* ${STAGE1}/src/gcc/
 
         chroot_exec $STAGE1 ${ABSOLUTE_PATH}/stage1/gcc.sh "GCC"
     fi

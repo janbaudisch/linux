@@ -12,7 +12,7 @@ build_busybox() {
 
         cd ${STAGE0}/src/busybox
 
-        cp ${ABSOLUTE_PATH}/stage0/busybox/config .config
+        cp ${ABSOLUTE_PATH}/files/busybox/config_static .config
 
         make oldconfig
         make -j$(nproc) CC=${STAGE0}/bin/musl-gcc

@@ -12,11 +12,11 @@ build_gcc_core() {
 
         cd ${STAGE0}/src/gcc
 
-        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/gcc3/unwind2.patch" > patch.sh
+        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/gcc/unwind2.patch" > patch.sh
         sh patch.sh
-        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/gcc3/ucontext.patch" > patch.sh
+        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/gcc/ucontext.patch" > patch.sh
         sh patch.sh
-        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/gcc3/unlink.patch" > patch.sh
+        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/gcc/unlink.patch" > patch.sh
         sh patch.sh
 
         sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in

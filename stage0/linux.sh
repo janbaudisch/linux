@@ -12,6 +12,9 @@ build_linux() {
 
         cd ${STAGE0}/src/linux
 
+        echo "patch -p1 < ${ABSOLUTE_PATH}/files/patches/linux/uapi.patch" > patch.sh
+        sh patch.sh
+
         make mrproper
         make INSTALL_HDR_PATH=dest headers_install
 

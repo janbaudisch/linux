@@ -12,7 +12,7 @@ build_make() {
 
         cd ${STAGE0}/src/make
 
-        # TODO: make patches universal
+        # TODO: make patch out of this
         sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
 
         CC=${STAGE0}/bin/musl-gcc \

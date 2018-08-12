@@ -33,5 +33,4 @@ Stage 2 can be built via `./tool stage2`.
 - bzip2
 - XZ-utils
 - libarchive
-- NetBSD curses
 - zlib

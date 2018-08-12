@@ -1,12 +1,11 @@
 import ../config/stage0/sources
 
 import ../scripts/cleanup
+import ../scripts/chroot
 import ../scripts/log
 
-STAGE0=${ABSOLUTE_PATH}/build/stage0
-
-import busybox/build
 import binutils
+import busybox
 import gcc-core
 import linux
 import make
@@ -16,9 +15,7 @@ function stage0() {
     if [ ! -d $STAGE0 ]
     then
         mkdir -p $STAGE0
-        cd $STAGE0
-        mkdir -p bin dev include lib proc src tmp
-
+        setup_root $STAGE0
     fi
 
     export PATH=${PATH}:${STAGE0}/bin
